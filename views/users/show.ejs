@@ -1,0 +1,78 @@
+<% include ../partials/header %>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div class="thumbnail">
+          <img src="<%= user.avatar %>" alt="user profile image">
+          <div class="caption">
+            <h4><%=user.username%></h4>
+            <h6><%=user.firstName + " " + user.lastName%></h6>
+            <p>
+              <%=user.bio%>
+            </p>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          <% for(var i=0; i < content.length; i++){ %>
+            <% if(content[i].text){ %>
+              <div class="col-md-12">
+                  <div class="thumbnail">
+                    <div class="caption-full">
+                      <p>
+                        <%=content[i].text%>
+                      </p>
+                      <h5>
+                         <%= moment(content[i].createdAt).fromNow() %> on <a href="/campgrounds/<%=content[i].campgroundId%>"><%=content[i].campgroundName%></a>
+                      </h5>
+                      <h5>
+                        <% if(currentUser && content[i].author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                        <a class="btn btn-xs btn-warning" href="/campgrounds/<%= content[i].campgroundId%>/comments/<%=content[i]._id%>/edit">Edit</a>
+                        <form class="delete-form" action="/campgrounds/<%= content[i].campgroundId%>/comments/<%=content[i]._id%>?_method=DELETE" method="post">
+                          <button class="btn btn-xs btn-danger" type="submit" name="button">Delete</button>
+                        </form>
+                        <% } %>
+                      </h5>
+                    </div>
+                </div>
+              </div>
+            <% } else { %>
+              <div class="col-md-12">
+                  <div class="thumbnail">
+                    <div class="caption-full">
+                      <p>
+                        <a href="/campgrounds/<%= content[i]._id %>"><%=content[i].name%></a>
+                      </p>
+                      <p>
+                        <%= moment(content[i].createdAt).fromNow() %>
+                      </p>
+                      <h5>
+                        <a class="btn btn-primary btn-xs" data-toggle="collapse" href="#campground<%=i%>" role="button" aria-expanded="false" aria-controls="collapseExample">
+                          Image
+                        </a>
+                        <% if(currentUser && content[i].author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin){ %>
+                          <a class="btn btn-warning btn-xs" href="/campgrounds/<%= content[i]._id %>/edit">Edit</a>
+                          <form class="delete-form" action="/campgrounds/<%=content[i]._id%>?_method=DELETE" method="post">
+                            <button class="btn btn-xs btn-danger" type="submit" name="button">Delete</button>
+                          </form>
+                        <% } %>
+                      </h5>
+                    </div>
+                     <div class="collapse" id="campground<%=i%>">
+                       <div class="card card-body">
+                         <img class="img-responsive" src="<%=content[i].image %>" alt="">
+                     </div>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+      <% } %>
+      </div>
+  </div>
+</div>
+
+
+<% include ../partials/footer %>
