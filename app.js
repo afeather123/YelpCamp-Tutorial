@@ -1,5 +1,6 @@
 var env = process.env.NODE_ENV || "dev";
 if(env === "dev"){
+    console.log("In developer environemnt");
     require("dotenv").config();
 }
 var express = require("express"),
@@ -51,6 +52,6 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/users", userRoutes);
 
-app.listen(process.env.PORT, function () {
+app.listen(process.env.PORT, process.env.IP, function () {
     console.log("Started server");
 });
