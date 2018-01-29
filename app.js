@@ -19,12 +19,7 @@ var commentRoutes = require("./routes/comments"),
     userRoutes = require("./routes/users"),
     indexRoutes = require("./routes/index");
 
-if(env === "dev") {
-    //mongoose.connect("mongodb://localhost/yelp_camp");
-    mongoose.connect("mongodb://alecfeatherston:mdl313Saizan@ds117868.mlab.com:17868/yelpcampakf");
-} else {
-    mongoose.connect("mongodb://alecfeatherston:mdl313Saizan@ds117868.mlab.com:17868/yelpcampakf");
-}
+mongoose.connect(process.env.DATABASEURL);
 
 //mongodb://alecfeatherston:mdl313*Saizan#@ds117868.mlab.com:17868/yelpcampakf
 app.set("view engine", "ejs");
