@@ -1,4 +1,7 @@
-require("dotenv").config();
+var env = process.env.NODE_ENV || "dev";
+if(env === "dev"){
+    require("dotenv").config();
+}
 var express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
